@@ -25,7 +25,7 @@ module.exports = {
   generatorSetup: (Markov, nlp) => {
     /*
       Here you can define a function that you can later call with `bot.generator()`.
-      You can use `markov-strings` and (`compromise` (nlp))[https://github.com/nlp-compromise/compromise] which are passed in as argumetns.
+      You can use `markov-strings` and `compromise` (nlp) here which are passed in as arguments.
       
       You should return a function here.
     */
