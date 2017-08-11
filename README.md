@@ -4,7 +4,7 @@ A highly customizable Twitter bot for all kinds of nonsense.
 
 ## Usage
 
-This is intended to be used as a docker image. (It is hosted on Docker Hub)[https://hub.docker.com/r/lnwdr/mintrahl/].
+This is intended to be used as a docker image. [It is hosted on Docker Hub](https://hub.docker.com/r/lnwdr/mintrahl/).
 
 Install with `docker pull lnwdr/mintrahl`
 
@@ -45,8 +45,8 @@ module.exports = {
 ```
 
 The arguments to the `generatorSetup` function  are:
-- Markov: an instance of (`markov-strings`)[https://github.com/scambier/markov-strings]
-- nlp: an instance of (`compromise`)[https://github.com/nlp-compromise/compromise]
+- Markov: an instance of [`markov-strings`](https://github.com/scambier/markov-strings)
+- nlp: an instance of [`compromise`](https://github.com/nlp-compromise/compromise)
 
 They are entirely optional, though.
 
