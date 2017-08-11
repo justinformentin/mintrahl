@@ -23,13 +23,32 @@ module.exports = {
   },
   owner: 'lnwdr',
   generatorSetup: (Markov, nlp) => {
-    // 
+    /*
+      Here you can define a function that you can later call with `bot.generator()`.
+      You can use `markov-strings` and (`compromise` (nlp))[https://github.com/nlp-compromise/compromise] which are passed in as argumetns.
+      
+      You should return a function here.
+    */
   },
   botSetup: (bot) => {
-    //
+    /*
+      Here you define what your bot should actually do.
+      
+      For example, this one will repsond to every direct message with "Yes".
+    */
+    
+    bot.on('directMessage', dm => {
+      bot.sendDirectMessage(dm.sender.screen_name, 'Yes')
+    })
   }
 }
 ```
+
+The arguments to the `generatorSetup` function  are:
+- Markov: an instance of (`markov-strings`)[https://github.com/scambier/markov-strings]
+- nlp: an instance of (`compromise`)[https://github.com/nlp-compromise/compromise]
+
+They are entirely optional, though.
 
 Now start the bot with
 
