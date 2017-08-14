@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { existsSync } = require('fs')
 const commandLineArgs = require('command-line-args')
 const makeBot = require('./twitter')

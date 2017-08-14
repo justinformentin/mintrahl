@@ -8,6 +8,12 @@ This is intended to be used as a docker image. [It is hosted on Docker Hub](http
 
 Install with `docker pull lnwdr/mintrahl`
 
+You can install it from NPM as well:
+
+```sh
+npm install -g mintrahl
+```
+
 Now you will need one or more bot definitons. Here's a minimal example:
 
 `my_bot.js`:
@@ -56,3 +62,8 @@ Now start the bot with
 docker run --rm -v $(pwd):/data lnwdr/mintrahl my_bot.js
 ```
 
+If you installed directly from NPM:
+
+```sh
+mintrahl my_bot.js
+```

@@ -6,8 +6,9 @@
     "type": "git",
     "url": "git@github.com:lnwdr/mintrahl.git"
   },
-  "author": "lnwdr",
-  "license": "ISC",
+  "bin": "./src/index.js",
+  "author": "lnwdr <leon@lnwdr.de>",
+  "license": "BSD-2-Clause",
   "dependencies": {
     "command-line-args": "^4.0.7",
     "compromise": "^10.7.1",
