@@ -1,6 +1,6 @@
 {
   "name": "mintrahl",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "repository": {
     "type": "git",
@@ -13,7 +13,6 @@
     "command-line-args": "^4.0.7",
     "compromise": "^10.7.1",
     "markov-strings": "^1.3.2",
-    "twit": "^2.2.9",
-    "twitter": "^1.7.1"
+    "twit": "^2.2.9"
   }
 }

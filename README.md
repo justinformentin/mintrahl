@@ -12,7 +12,7 @@ You can install it from NPM as well:
 
 ```sh
 npm install -g mintrahl
-```
+``` 
 
 Now you will need one or more bot definitons. Here's a minimal example:
 
@@ -28,17 +28,11 @@ module.exports = {
     access_token_secret: '###################'
   },
   owner: 'lnwdr',
-  generatorSetup: (Markov, nlp) => {
-    /*
-      Here you can define a function that you can later call with `bot.generator()`.
-      You can use `markov-strings` and `compromise` (nlp) here which are passed in as arguments.
-      
-      You should return a function here.
-    */
-  },
   botSetup: (bot) => {
     /*
       Here you define what your bot should actually do.
+      You can use  instances of `markov-strings` and `compromise` (nlp) here which are suppliead
+      in `bot.utils`.
       
       For example, this one will repsond to every direct message with "Yes".
     */
@@ -50,11 +44,15 @@ module.exports = {
 }
 ```
 
-The arguments to the `generatorSetup` function  are:
+The contents of to `bot.utils` are:
 - Markov: an instance of [`markov-strings`](https://github.com/scambier/markov-strings)
 - nlp: an instance of [`compromise`](https://github.com/nlp-compromise/compromise)
 
-They are entirely optional, though.
+They are entirely optional to use, though.
+
+### Logging
+
+Use `bot.log()` for logging, it works just like `console.log`. It will write to stdout and prefix a timestamp and the bot's username.
 
 Now start the bot with
 

@@ -2,23 +2,65 @@ const Twit = require('twit')
 const EventEmitter = require('events')
 
 class Twitter extends EventEmitter {
-  constructor (client, screenName, owner) {
+  constructor (client, screenName, userId, owner) {
     super()
 
     this.client = client
     this.screenName = screenName
     this.owner = owner
+    this.userId = userId
 
     this.userStream = client.stream('user')
+    this.selfFollowStream = client.stream('statuses/filter', {
+      follow: userId,
+      replies: 'all'
+    })
+
     this.listenForDirectMessages()
+    this.listenForReplys()
+    this.listenForRetweets()
+    this.listenForFavs()
+    this.listenForFollows()
   }
 
   log (...args) {
-    console.log(`[${this.screenName}]`, ...args)
+    console.log((new Date()).toISOString(), `[${this.screenName}]`, ...args)
   }
 
   delay (fn) {
     setTimeout(fn, 2000 + 2000 * Math.random())
+  }
+
+  listenForReplys () {
+    this.selfFollowStream.on('tweet', data => {
+      if (data.in_reply_to_user_id === this.userId) {
+        this.log('REPLY from', data.user.screen_name)
+        this.emit('reply', data)
+      }
+    })
+  }
+
+  listenForFavs () {
+    this.userStream.on('favorite', data => {
+      this.log('FAVORITE from', data.source.screen_name)
+      this.emit('favorite', data)
+    })
+  }
+
+  listenForFollows () {
+    this.userStream.on('follow', data => {
+      this.log('FOLLOW from', data.source.screen_name)
+      this.emit('follow', data)
+    })
+  }
+
+  listenForRetweets () {
+    this.selfFollowStream.on('tweet', data => {
+      if (data.retweeted_status) {
+        this.log('RETWEET from', data.user.screen_name)
+        this.emit('retweet', data)
+      }
+    })
   }
 
   listenForDirectMessages () {
@@ -30,11 +72,14 @@ class Twitter extends EventEmitter {
           if (cmdMatch) {
             const name = cmdMatch[1]
             const content = cmdMatch[2]
+            this.log('COMMAND', `[${name}]`, content)
             this.emit('command', {name, content})
           } else {
+            this.log('DIRECT MESSAGE from', dm.sender.screen_name)
             this.emit('directMessage', dm)
           }
         } else {
+          this.log('DIRECT MESSAGE from', dm.sender.screen_name)
           this.emit('directMessage', dm)
         }
       }
@@ -58,6 +103,7 @@ class Twitter extends EventEmitter {
 
   postTweet (text) {
     this.delay(() => {
+      this.log('TWEETING', text)
       this.client.post('statuses/update', {
         status: text,
         enable_dm_commands: false
@@ -79,13 +125,9 @@ const getCredentials = client => {
   return credentials
 }
 
-const getScreenName = client => {
-  return getCredentials(client).then(data => data.screen_name)
-}
-
 module.exports = (auth, owner) => {
   const client = new Twit(auth)
-  return getScreenName(client).then(screenName => {
-    return new Twitter(client, screenName, owner)
+  return getCredentials(client).then(credentials => {
+    return new Twitter(client, credentials.screen_name, credentials.id, owner)
   })
 }

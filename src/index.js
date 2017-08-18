@@ -21,10 +21,13 @@ Promise.all(options.configs.map(configPath => {
     throw new Error(`File not found: ${configPath}`)
   }
 
-  const { auth, owner, generatorSetup, botSetup } = require(configPath)
+  const { auth, owner, botSetup } = require(configPath)
 
   return makeBot(auth, owner).then(bot => {
-    bot.generator = generatorSetup(Markov, nlp)
+    bot.utils = {
+      Markov,
+      nlp
+    }
     botSetup(bot)
     return bot
   })
