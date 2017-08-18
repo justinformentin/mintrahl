@@ -44,6 +44,20 @@ module.exports = {
 }
 ```
 
+### Events
+
+The bot will emit the following events from the Twitter API:
+
+- `reply`
+- `directMessage`
+- `favorite`
+- `rewteet`
+- `follow`
+
+In addition it will emit a `command` event: a direct message from the "owner" username starting with a "/" followed by the command name, e.g. "/tweet whatever". the command event contains the `name` and the `content` (the rest of the DM) of the command. Use these commands to reomte control your bot.
+
+### Utilities
+
 The contents of to `bot.utils` are:
 - Markov: an instance of [`markov-strings`](https://github.com/scambier/markov-strings)
 - nlp: an instance of [`compromise`](https://github.com/nlp-compromise/compromise)
@@ -53,6 +67,8 @@ They are entirely optional to use, though.
 ### Logging
 
 Use `bot.log()` for logging, it works just like `console.log`. It will write to stdout and prefix a timestamp and the bot's username.
+
+### Launch
 
 Now start the bot with
 
